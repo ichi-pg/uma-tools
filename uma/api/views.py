@@ -6,5 +6,7 @@ from django.http import HttpResponse
 from . import models
 
 def combinations(req):
-    # TODO 引数
-    return HttpResponse(models.combinations())
+    idx = req.GET.getlist('idx')
+    idx = [int(i) for i in idx]
+    res = models.combinations(idx)
+    return HttpResponse(res)

@@ -62,18 +62,16 @@ g_scores = np.array([
 ])
 
 def score_mtx(idx):
-    return np.array([[g_scores[y][x] for y in idx] for x in idx])
+    return [[g_scores[y][x] for y in idx] for x in idx]
 
 def avg_score(idx):
-    return score_mtx(idx).sum() / len(idx) / len(idx)
+    return np.array(score_mtx(idx)).sum() / len(idx) / len(idx)
 
-# TODO 再帰
 def to_girl_indices(names):
-    return [g_girls.index(i) for i in names]
+    return [to_girl_indices(i) if isinstance(i, list) else g_girls.index(i) for i in names]
 
-# TODO 再帰
 def to_girl_names(idx):
-    return [g_girls[i] for i in idx]
+    return [to_girl_names(i) if isinstance(i, list) else g_girls[i] for i in idx]
 
 def _contains_list(a, b):
     return len(_not_in_list(a, b)) == 0
@@ -85,4 +83,7 @@ def _not_in_list(a, b):
     return [i for i in a if i not in b]
 
 def combinations(idx = [], size = 4, score = 1.0):
-    return [_not_in_list(c, idx) for c in _all_combinations(size) if _contains_list(idx, c) and avg_score(c) >= score]
+    return [
+        _not_in_list(c, idx) for c in _all_combinations(size)
+        if _contains_list(idx, c) and avg_score(c) >= score
+    ]
