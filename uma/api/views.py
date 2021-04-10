@@ -11,11 +11,17 @@ def to_json_res(res):
     return HttpResponse(res, content_type='application/json; charset=UTF-8')
 
 def combinations(req):
-    idx = req.GET.getlist('idx')
-    idx = [int(i) for i in idx]
-    res = models.combinations(idx)
-    return to_json_res(res)
+    girls = [int(i) for i in req.GET.getlist('girls')]
+    size = int(req.GET.get('size', 4))
+    score = float(req.GET.get('score', 1.0))
+    com = models.combinations(girls, size, score)
+    return to_json_res({
+        'combinations':com,
+        'count':len(com),
+    })
 
 def girls(req):
-    res = models.g_girls
-    return to_json_res(res)
+    return to_json_res({
+        'girls':models.g_girls,
+        'count':len(models.g_girls),
+    })

@@ -6,31 +6,31 @@ import numpy as np
 import itertools
 
 g_girls = [
-    'アグネスタキオン',
-    'ウイニングチケット',
-    'ウォッカ',
-    'エアグルーブ',
-    'エルコンドルパサー',
-    'オグリキャップ',
-    'キングヘイロー',
-    'グラスワンダー',
-    'ゴールドシップ',
-    'サイレンススズカ',
-    'サクラバクシンオー',
-    'シンボリルドルフ',
-    'スーパークリーク',
-    'スペシャルウィーク',
-    'タイキシャトル',
-    'ダイワスカーレット',
-    'トウカイテイオー',
-    'ナイスネイチャ',
-    'ハルウララ',
-    'マチカネフクキタル',
-    'マヤノトップガン',
-    'マルゼンスキー',
-    'メジロマックイーン',
-    'メジロライアン',
-    'ライスシャワー',
+    u'アグネスタキオン',
+    u'ウイニングチケット',
+    u'ウォッカ',
+    u'エアグルーブ',
+    u'エルコンドルパサー',
+    u'オグリキャップ',
+    u'キングヘイロー',
+    u'グラスワンダー',
+    u'ゴールドシップ',
+    u'サイレンススズカ',
+    u'サクラバクシンオー',
+    u'シンボリルドルフ',
+    u'スーパークリーク',
+    u'スペシャルウィーク',
+    u'タイキシャトル',
+    u'ダイワスカーレット',
+    u'トウカイテイオー',
+    u'ナイスネイチャ',
+    u'ハルウララ',
+    u'マチカネフクキタル',
+    u'マヤノトップガン',
+    u'マルゼンスキー',
+    u'メジロマックイーン',
+    u'メジロライアン',
+    u'ライスシャワー',
 ]
 
 g_scores = np.array([
@@ -73,17 +73,17 @@ def to_girl_indices(names):
 def to_girl_names(idx):
     return [to_girl_names(i) if isinstance(i, list) else g_girls[i] for i in idx]
 
-def _contains_list(a, b):
-    return len(_not_in_list(a, b)) == 0
+def contains_list(a, b):
+    return len(not_in_list(a, b)) == 0
 
-def _all_combinations(size):
+def all_combinations(size):
     return itertools.combinations(range(len(g_scores)), size)
 
-def _not_in_list(a, b):
+def not_in_list(a, b):
     return [i for i in a if i not in b]
 
-def combinations(idx = [], size = 4, score = 1.0):
+def combinations(girls = [], size = 4, score = 1.0):
     return [
-        _not_in_list(c, idx) for c in _all_combinations(size)
-        if _contains_list(idx, c) and avg_score(c) >= score
+        not_in_list(c, girls) for c in all_combinations(size)
+        if contains_list(girls, c) and avg_score(c) >= score
     ]
