@@ -84,6 +84,6 @@ def not_in_list(a, b):
 
 def combinations(girls = [], size = 4, score = 1.0):
     return [
-        not_in_list(c, girls) for c in all_combinations(size)
+        list(c) for c in all_combinations(size)
         if contains_list(girls, c) and avg_score(c) >= score
     ]

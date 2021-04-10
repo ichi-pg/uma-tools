@@ -4,8 +4,19 @@ from django.shortcuts import render
 
 from api import models
 
-def index(req):
-    return render(req, 'web/index.html', {
-        'girls': models.g_girls,
-        'combinations': models.to_girl_names(models.combinations(size=4)),
+def combinations(req):
+    girls = [int(i) for i in req.GET.getlist('girls')]
+    size = min(max(int(req.GET.get('size', 4)), 4), 8)
+    score = min(max(float(req.GET.get('score', 1)), 0), 1)
+    return render(req, 'web/combinations.html', {
+        'girls': [
+            {'index': k, 'name': v, 'checked': 'checked' if k in girls else '' }
+            for k,v in enumerate(models.g_girls)
+        ],
+        'size': size,
+        'score': score,
+        'combinations': [
+            [k] + models.to_girl_names(v) + [models.avg_score(v)]
+            for k,v in enumerate(models.combinations(girls, size, score))
+        ],
     })
