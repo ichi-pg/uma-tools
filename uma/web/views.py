@@ -16,7 +16,9 @@ def combinations(req):
         'size': size,
         'score': score,
         'combinations': [
-            [k] + models.to_girl_names(v) + [models.avg_score(v)]
+            [{'value': k}]
+            + [{'value': models.g_girls[i], 'primary': True if i in girls else False} for i in v]
+            + [{'value': float(int(models.avg_score(v)*100)/100)}]
             for k,v in enumerate(models.combinations(girls, size, score))
         ],
     })

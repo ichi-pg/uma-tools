@@ -9,6 +9,19 @@
         <div class="container">
             <div class="card my-2">
                 <div class="card-body">
+                    <p>
+                        因子考慮しない良相性を1.0として、組み合わせにおける平均値を計算しています。
+                    </p>
+                    <div>
+                        出典：
+                    </div>
+                    <div>
+                        管理者：<a href="https://twitter.com/ichi_pg">@ichi_pg</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card my-2">
+                <div class="card-body">
                     <form>
                         <div class="input-group">
                             <span class="input-group-text">相性</span>
@@ -16,20 +29,25 @@
                             <span class="input-group-text">人数</span>
                             <input type="number" class="form-control" name="size" value="{{size}}" min="4" max="8">
                         </div>
-                        <div class="input-group my-2 row">
+                        <div class="input-group mt-2 row">
                             {% for girl in girls %}
                                 <div class="col-3">
                                     <div class="form-check form-check-inline">
-                                        <input type="checkbox" class="form-check-input" name="girls" value="{{girl.index}}" id="{{girl.index}}" {{girl.checked}}>
-                                        <label class="form-check-label" for="{{girl.index}}">{{girl.name}}</label>
+                                        <input type="checkbox" class="form-check-input" name="girls" value="{{girl.index}}" id="girls-{{girl.index}}" {{girl.checked}}>
+                                        <label class="form-check-label" for="girls-{{girl.index}}">{{girl.name}}</label>
                                     </div>
                                 </div>
                             {% endfor %}
                         </div>
-                        <div class="input-group">
+                        <div class="input-group mt-2">
                             <button type="submit" class="btn btn-primary">検索</button>
                         </div>
                     </form>
+                    <div class="mt-2">
+                        <a href="/web/combinations/">
+                            <button class="btn btn-secondary">リセット</button>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="card my-2">
@@ -39,7 +57,11 @@
                             {% for girls in combinations %}
                                 <tr>
                                     {% for girl in girls %}
-                                        <td>{{ girl }}</td>
+                                        {% if girl.primary %}
+                                           <td class="text-primary">{{ girl.value }}</td>
+                                        {% else %}
+                                           <td>{{ girl.value }}</td>
+                                        {% endif %}
                                     {% endfor %}
                                 </tr>
                             {% endfor %}

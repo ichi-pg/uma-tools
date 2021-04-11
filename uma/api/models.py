@@ -65,7 +65,7 @@ def score_mtx(idx):
     return [[g_scores[y][x] for y in idx] for x in idx]
 
 def avg_score(idx):
-    return np.array(score_mtx(idx)).sum() / len(idx) / len(idx)
+    return np.average(score_mtx(idx))
 
 def to_girl_indices(names):
     return [to_girl_indices(i) if isinstance(i, list) else g_girls.index(i) for i in names]
@@ -77,7 +77,7 @@ def contains_list(a, b):
     return len(not_in_list(a, b)) == 0
 
 def all_combinations(size):
-    return itertools.combinations(range(len(g_scores)), size)
+    return itertools.combinations(range(len(g_girls)), size)
 
 def not_in_list(a, b):
     return [i for i in a if i not in b]
